@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>World of Video Craft</title>
+		<title>three.js - pointerlock controls</title>
 		<style>
 			html, body {
 				width: 100%;
@@ -54,38 +54,11 @@
 				cursor: pointer;
 
 			}
-            #wait {
-
-				width: 100%;
-				height: 100%;
-
-				display: -webkit-box;
-				display: -moz-box;
-				display: box;
-
-				-webkit-box-orient: horizontal;
-				-moz-box-orient: horizontal;
-				box-orient: horizontal;
-
-				-webkit-box-pack: center;
-				-moz-box-pack: center;
-				box-pack: center;
-
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				box-align: center;
-
-				color: #ffffff;
-				text-align: center;
-
-				cursor: pointer;
-
-			}
 
 		</style>
 	</head>
 	<body>
-		<script src="js/three.min.js"></script>
+		<script src="../js/three.min.js"></script>
 		<script src="js/PointerLockControls.js"></script>
         <script src='js/threex.videotexture.js'></script>
 
@@ -95,16 +68,10 @@
 				<span style="font-size:40px">Click to play</span>
 				<br />
 				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
-                <br /><br /><br /><br /><br />
-                <span style="font-size:20px">Loading Video Takes Time</span>
-                <br />
-				Please wait 30 seconds before clicking Play.
-				<br />
 			</div>
 
 		</div>
 
-      
 		<script>
 
 			var camera, scene, renderer;
@@ -219,26 +186,12 @@
                 ///////
                 
                var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
-               var videoTexture1= new THREEx.VideoTexture('videos/lion.mp4');
-                var videoTexture2= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture3= new THREEx.VideoTexture('videos/family.mp4');
-                var videoTexture4= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture5= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture6= new THREEx.VideoTexture('videos/sponge.mp4');
-                var videoTexture7= new THREEx.VideoTexture('videos/lion.mp4');
-                var videoTexture8= new THREEx.VideoTexture('videos/lion.mp4');
+               var videoTexture1= new THREEx.VideoTexture('videos/sintel.ogv');
 	           var video	= videoTexture.video
                 var video	= videoTexture1.video
                updateFcts.push(function(delta, now){
 		videoTexture.update(delta, now)
         videoTexture1.update(delta, now)
-        videoTexture2.update(delta, now)
-        videoTexture3.update(delta, now)
-        videoTexture4.update(delta, now)
-        videoTexture5.update(delta, now)
-        videoTexture6.update(delta, now)
-        videoTexture7.update(delta, now)
-        videoTexture8.update(delta, now)
 	})
                 var geometry	= new THREE.CubeGeometry(50,40,1);
 	var material	= new THREE.MeshBasicMaterial({
@@ -255,19 +208,19 @@
                 /////////////
      var mesh_0	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_1	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture2.texture	}));
+    var mesh_1	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_2	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture3.texture	}));
+    var mesh_2	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_3	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture4.texture	}));
+    var mesh_3	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_4	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture5.texture	}));
+    var mesh_4	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_5	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture6.texture	}));
+    var mesh_5	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_6	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture7.texture	}));
+    var mesh_6	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
-    var mesh_7	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture8.texture	}));
+    var mesh_7	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
     //var mesh_8	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
 
@@ -329,7 +282,20 @@ scene.add( mesh_7 );
 
     mesh_7.rotation.set(0,8 * Math.PI/4, 0)
 
-   
+
+    
+
+    
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 /////////
 				var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
 				light.position.set( 1, 1, 1 );
