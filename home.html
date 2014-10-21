@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>three.js - pointerlock controls</title>
+		<title>World of Video Craft</title>
 		<style>
 			html, body {
 				width: 100%;
@@ -54,6 +54,33 @@
 				cursor: pointer;
 
 			}
+            #wait {
+
+				width: 100%;
+				height: 100%;
+
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
+
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+
+				color: #ffffff;
+				text-align: center;
+
+				cursor: pointer;
+
+			}
 
 		</style>
 	</head>
@@ -68,10 +95,16 @@
 				<span style="font-size:40px">Click to play</span>
 				<br />
 				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+                <br /><br /><br /><br /><br />
+                <span style="font-size:20px">Loading Video Takes Time</span>
+                <br />
+				Please wait 30 seconds before clicking Play.
+				<br />
 			</div>
 
 		</div>
 
+      
 		<script>
 
 			var camera, scene, renderer;
