@@ -244,7 +244,9 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
              ['videos/banana.mp3',
               'videos/family.mp3',
               'videos/sponge.mp3',
-              'videos/lion.mp3',],
+              'videos/lion.mp3',
+             'videos/sponge.mp3',
+             'videos/sintel.ogv'],
             finishedLoading);
         
     bufferLoader.load()
@@ -252,7 +254,7 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         
     function finishedLoading(bufferList) {
         // Create two sources and play them both together.
-
+       var videoTexture7= new THREEx.VideoTexture('videos/lion.mp4');
 
 
 
@@ -262,19 +264,19 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         gain0.connect(panner0);
         panner0.connect(mainVolume);
         
-        source1 = context.createBufferSource();source1.buffer = bufferList[1];source1.loop=true;
+        source1 = context.createBufferSource();source1.buffer = bufferList[5];source1.loop=true;
         gain1 = context.createGain();
         source1.connect(gain1);
         gain1.connect(panner1);
         panner1.connect(mainVolume);
         
-        source2 = context.createBufferSource();source2.buffer = bufferList[2];source2.loop=true;
+        source2 = context.createBufferSource();source2.buffer = bufferList[3];source2.loop=true;
         gain2 = context.createGain();
         source2.connect(gain2);
         gain2.connect(panner2);
         panner2.connect(mainVolume);
         
-        source3 = context.createBufferSource();source3.buffer = bufferList[3];source3.loop=true;
+        source3 = context.createBufferSource();source3.buffer = bufferList[1];source3.loop=true;
         gain3 = context.createGain();
         source3.connect(gain3);
         gain3.connect(panner3);
@@ -286,13 +288,13 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         gain4.connect(panner4);
         panner4.connect(mainVolume);
         
-        source5 = context.createBufferSource();source5.buffer = bufferList[1];source5.loop=true;
+        source5 = context.createBufferSource();source5.buffer = bufferList[0];source5.loop=true;
         gain5 = context.createGain();
         source5.connect(gain5);
         gain5.connect(panner5);
         panner5.connect(mainVolume);
         
-        source6 = context.createBufferSource();source6.buffer = bufferList[2];source6.loop=true;
+        source6 = context.createBufferSource();source6.buffer = bufferList[4];source6.loop=true;
         gain6 = context.createGain();
         source6.connect(gain6);
         gain6.connect(panner6);
@@ -308,15 +310,7 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         
         
         
-        source0.start(0);
-        source1.start(0);
-        source2.start(0);
-        source3.start(0);
-        source4.start(0);
-        source5.start(0);
-        source6.start(0);
-        source7.start(0);
-        
+
 
        }
         
@@ -528,6 +522,23 @@ mesh_6.rotation.set(0,0,0)
 scene.add( mesh_7 );
 mesh_7.position.set(d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
 mesh_7.rotation.set(0,-Math.PI/4,0)
+
+
+
+//////// To make Audio Synch with video
+        source0.start(0);
+        source1.start(0);
+        source2.start(0);
+        source3.start(0);
+        source4.start(0);
+        source5.start(0);
+        source6.start(0);
+        source7.start(0);
+        
+
+////////
+
+
 
 
 
