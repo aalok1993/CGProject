@@ -90,6 +90,7 @@
 		<script src="js/three.min.js"></script>
 		<script src="js/PointerLockControls.js"></script>
         <script src='js/threex.videotexture.js'></script>
+        <script src='js/OBJLoader.js'></script>
 
 		<div id="blocker">
 
@@ -114,6 +115,13 @@
 ///////////////////////////////////////////////////////////////
 
 //window.onload = audio_init;
+            var REF_DISTANCE = 5;
+            var MAX_DISTANCE = 10000;
+            var ROLLOF_FACTOR = 0.2;
+            var CONE_INNER_ANGLE = 360;
+            var CONE_OUTER_GAIN = 0;
+            var CONE_OUTER_ANGLE= 0.5;
+            
 var context;
 var bufferLoader;
 var source0, source1, source2, source3, source4, source5, source6, source7;
@@ -131,96 +139,96 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
     var panner0 = context.createPanner();
     panner0.panningModel = 'HRTF';
     panner0.distanceModel = 'inverse';
-    panner0.refDistance = 1;
-    panner0.maxDistance = 10000;
-    panner0.rolloffFactor = 0.1;
-    panner0.coneInnerAngle = 360;
-    panner0.coneOuterAngle = 0;
-    panner0.coneOuterGain = 0;
+    panner0.refDistance = REF_DISTANCE;
+    panner0.maxDistance = MAX_DISTANCE;
+    panner0.rolloffFactor = ROLLOF_FACTOR;
+    panner0.coneInnerAngle = CONE_INNER_ANGLE;
+    panner0.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner0.coneOuterGain = CONE_OUTER_GAIN;
     panner0.setOrientation(1,0,0);
     panner0.setPosition(0,0,0)
     
     var panner1 = context.createPanner();
     panner1.panningModel = 'HRTF';
     panner1.distanceModel = 'inverse';
-    panner1.refDistance = 1;
-    panner1.maxDistance = 10000;
-    panner1.rolloffFactor = 0.1;
-    panner1.coneInnerAngle = 360;
-    panner1.coneOuterAngle = 0;
-    panner1.coneOuterGain = 0;
+    panner1.refDistance = REF_DISTANCE;
+    panner1.maxDistance = MAX_DISTANCE;
+    panner1.rolloffFactor = ROLLOF_FACTOR;
+    panner1.coneInnerAngle = CONE_INNER_ANGLE;
+    panner1.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner1.coneOuterGain = CONE_OUTER_GAIN;
     panner1.setOrientation(1,0,0);
     panner1.setPosition(0,0,0)
     
     var panner2 = context.createPanner();
     panner2.panningModel = 'HRTF';
     panner2.distanceModel = 'inverse';
-    panner2.refDistance = 1;
-    panner2.maxDistance = 10000;
-    panner2.rolloffFactor = 0.1;
-    panner2.coneInnerAngle = 360;
-    panner2.coneOuterAngle = 0;
-    panner2.coneOuterGain = 0;
+    panner2.refDistance = REF_DISTANCE;
+    panner2.maxDistance = MAX_DISTANCE;
+    panner2.rolloffFactor = ROLLOF_FACTOR;
+    panner2.coneInnerAngle = CONE_INNER_ANGLE;
+    panner2.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner2.coneOuterGain = CONE_OUTER_GAIN;
     panner2.setOrientation(1,0,0);
     panner2.setPosition(0,0,0)
     
     var panner3 = context.createPanner();
     panner3.panningModel = 'HRTF';
     panner3.distanceModel = 'inverse';
-    panner3.refDistance = 1;
-    panner3.maxDistance = 10000;
-    panner3.rolloffFactor = 0.1;
-    panner3.coneInnerAngle = 360;
-    panner3.coneOuterAngle = 0;
-    panner3.coneOuterGain = 0;
+    panner3.refDistance = REF_DISTANCE;
+    panner3.maxDistance = MAX_DISTANCE;
+    panner3.rolloffFactor = ROLLOF_FACTOR;
+    panner3.coneInnerAngle = CONE_INNER_ANGLE;
+    panner3.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner3.coneOuterGain = CONE_OUTER_GAIN;
     panner3.setOrientation(1,0,0);
     panner3.setPosition(0,0,0)
    
     var panner4 = context.createPanner();
     panner4.panningModel = 'HRTF';
     panner4.distanceModel = 'inverse';
-    panner4.refDistance = 1;
-    panner4.maxDistance = 10000;
-    panner4.rolloffFactor = 0.1;
-    panner4.coneInnerAngle = 360;
-    panner4.coneOuterAngle = 0;
-    panner4.coneOuterGain = 0;
+    panner4.refDistance = REF_DISTANCE;
+    panner4.maxDistance = MAX_DISTANCE;
+    panner4.rolloffFactor = ROLLOF_FACTOR;
+    panner4.coneInnerAngle = CONE_INNER_ANGLE;
+    panner4.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner4.coneOuterGain = CONE_OUTER_GAIN;
     panner4.setOrientation(1,0,0);
     panner4.setPosition(0,0,0)
     
     var panner5 = context.createPanner();
     panner5.panningModel = 'HRTF';
     panner5.distanceModel = 'inverse';
-    panner5.refDistance = 1;
-    panner5.maxDistance = 10000;
-    panner5.rolloffFactor = 0.1;
-    panner5.coneInnerAngle = 360;
-    panner5.coneOuterAngle = 0;
-    panner5.coneOuterGain = 0;
+    panner5.refDistance = REF_DISTANCE;
+    panner5.maxDistance = MAX_DISTANCE;
+    panner5.rolloffFactor = ROLLOF_FACTOR;
+    panner5.coneInnerAngle = CONE_INNER_ANGLE;
+    panner5.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner5.coneOuterGain = CONE_OUTER_GAIN;
     panner5.setOrientation(1,0,0);
     panner5.setPosition(0,0,0)
     
     var panner6 = context.createPanner();
     panner6.panningModel = 'HRTF';
     panner6.distanceModel = 'inverse';
-    panner6.refDistance = 1;
-    panner6.maxDistance = 10000;
-    panner6.rolloffFactor = 0.1;
-    panner6.coneInnerAngle = 360;
-    panner6.coneOuterAngle = 0;
-    panner6.coneOuterGain = 0;
+    panner6.refDistance = REF_DISTANCE;
+    panner6.maxDistance = MAX_DISTANCE;
+    panner6.rolloffFactor = ROLLOF_FACTOR;
+    panner6.coneInnerAngle = CONE_INNER_ANGLE;
+    panner6.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner6.coneOuterGain = CONE_OUTER_GAIN;
     panner6.setOrientation(1,0,0);
     panner6.setPosition(0,0,0)
     
     var panner7 = context.createPanner();
     panner7.panningModel = 'HRTF';
     panner7.distanceModel = 'inverse';
-    panner7.refDistance = 1;
-    panner7.maxDistance = 10000;
-    panner7.rolloffFactor = 0.1;
-    panner7.coneInnerAngle = 360;
-    panner7.coneOuterAngle = 0;
-    panner7.coneOuterGain = 0;
+    panner7.refDistance = REF_DISTANCE;
+    panner7.maxDistance = MAX_DISTANCE;
+    panner7.rolloffFactor = ROLLOF_FACTOR;
+    panner7.coneInnerAngle = CONE_INNER_ANGLE;
+    panner7.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner7.coneOuterGain = CONE_OUTER_GAIN;
     panner7.setOrientation(1,0,0);
     panner7.setPosition(0,0,0)
     
@@ -254,7 +262,7 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         
     function finishedLoading(bufferList) {
         // Create two sources and play them both together.
-       var videoTexture7= new THREEx.VideoTexture('videos/lion.mp4');
+      // var videoTexture7= new THREEx.VideoTexture('videos/lion.webm');
 
 
 
@@ -310,7 +318,15 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         
         
         
-
+        source0.start(0);
+        source1.start(0);
+        source2.start(0);
+        source3.start(0);
+        source4.start(0);
+        source5.start(0);
+        source6.start(0);
+        source7.start(0);
+        
 
        }
         
@@ -450,12 +466,12 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
 
                 var videoTexture0= new THREEx.VideoTexture('videos/banana.mp4');
                 var videoTexture1= new THREEx.VideoTexture('videos/sintel.ogv');
-                var videoTexture2= new THREEx.VideoTexture('videos/lion.mp4');
+                var videoTexture2= new THREEx.VideoTexture('videos/lion.webm');
                 var videoTexture3= new THREEx.VideoTexture('videos/family.mp4');
                 var videoTexture4= new THREEx.VideoTexture('videos/banana.mp4');
                 var videoTexture5= new THREEx.VideoTexture('videos/banana.mp4');
                 var videoTexture6= new THREEx.VideoTexture('videos/sponge.mp4');
-                var videoTexture7= new THREEx.VideoTexture('videos/lion.mp4');
+                var videoTexture7= new THREEx.VideoTexture('videos/lion.webm');
                 
                 videoTexture0.video.volume = 0;
                 videoTexture1.video.volume = 0;
@@ -522,23 +538,6 @@ mesh_6.rotation.set(0,0,0)
 scene.add( mesh_7 );
 mesh_7.position.set(d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
 mesh_7.rotation.set(0,-Math.PI/4,0)
-
-
-
-//////// To make Audio Synch with video
-        source0.start(0);
-        source1.start(0);
-        source2.start(0);
-        source3.start(0);
-        source4.start(0);
-        source5.start(0);
-        source6.start(0);
-        source7.start(0);
-        
-
-////////
-
-
 
 
 
@@ -648,6 +647,27 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 				//
 
 				window.addEventListener( 'resize', onWindowResize, false );
+            
+            
+            
+            
+            ////////////////////
+            
+            /////////////////////////////////////////////////////////////////////////////////////
+//////////////    Loading Minion Object    ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+           
+//      var loader = new THREE.OBJLoader();
+//            
+//loader.load( './images/minion.obj', function ( object2 ) {
+//  scene.add( object2 );
+// 
+//} );
+//            
+//            
+//            
+            
+            //////////////////
 
 //			}
 //////////////////////////////////////////////////////////////////////////////////////
