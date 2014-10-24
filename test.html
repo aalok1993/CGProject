@@ -85,6 +85,8 @@
 		</style>
 	</head>
 	<body>
+        
+        <script src='js/buffer_loader.js'></script>
 		<script src="js/three.min.js"></script>
 		<script src="js/PointerLockControls.js"></script>
         <script src='js/threex.videotexture.js'></script>
@@ -106,14 +108,292 @@
 
       
 		<script>
+            
+///////////////////////////////////////////////////////////////
+///////////// Loading Audio tracks into buffer  ///////////////
+///////////////////////////////////////////////////////////////
 
+//window.onload = audio_init;
+var context;
+var bufferLoader;
+var source0, source1, source2, source3, source4, source5, source6, source7;
+var panner0, panner1, panner2, panner3, panner4, panner5, panner6, panner7;
+var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
+//var listener;
+//function audio_init() {
+    // Fix up prefixing
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    context = new AudioContext();
+    
+    mainVolume = context.createGain();
+    mainVolume.connect(context.destination);
+
+    var panner0 = context.createPanner();
+    panner0.panningModel = 'HRTF';
+    panner0.distanceModel = 'inverse';
+    panner0.refDistance = 1;
+    panner0.maxDistance = 10000;
+    panner0.rolloffFactor = 0.1;
+    panner0.coneInnerAngle = 360;
+    panner0.coneOuterAngle = 0;
+    panner0.coneOuterGain = 0;
+    panner0.setOrientation(1,0,0);
+    panner0.setPosition(0,0,0)
+    
+    var panner1 = context.createPanner();
+    panner1.panningModel = 'HRTF';
+    panner1.distanceModel = 'inverse';
+    panner1.refDistance = 1;
+    panner1.maxDistance = 10000;
+    panner1.rolloffFactor = 0.1;
+    panner1.coneInnerAngle = 360;
+    panner1.coneOuterAngle = 0;
+    panner1.coneOuterGain = 0;
+    panner1.setOrientation(1,0,0);
+    panner1.setPosition(0,0,0)
+    
+    var panner2 = context.createPanner();
+    panner2.panningModel = 'HRTF';
+    panner2.distanceModel = 'inverse';
+    panner2.refDistance = 1;
+    panner2.maxDistance = 10000;
+    panner2.rolloffFactor = 0.1;
+    panner2.coneInnerAngle = 360;
+    panner2.coneOuterAngle = 0;
+    panner2.coneOuterGain = 0;
+    panner2.setOrientation(1,0,0);
+    panner2.setPosition(0,0,0)
+    
+    var panner3 = context.createPanner();
+    panner3.panningModel = 'HRTF';
+    panner3.distanceModel = 'inverse';
+    panner3.refDistance = 1;
+    panner3.maxDistance = 10000;
+    panner3.rolloffFactor = 0.1;
+    panner3.coneInnerAngle = 360;
+    panner3.coneOuterAngle = 0;
+    panner3.coneOuterGain = 0;
+    panner3.setOrientation(1,0,0);
+    panner3.setPosition(0,0,0)
+   
+    var panner4 = context.createPanner();
+    panner4.panningModel = 'HRTF';
+    panner4.distanceModel = 'inverse';
+    panner4.refDistance = 1;
+    panner4.maxDistance = 10000;
+    panner4.rolloffFactor = 0.1;
+    panner4.coneInnerAngle = 360;
+    panner4.coneOuterAngle = 0;
+    panner4.coneOuterGain = 0;
+    panner4.setOrientation(1,0,0);
+    panner4.setPosition(0,0,0)
+    
+    var panner5 = context.createPanner();
+    panner5.panningModel = 'HRTF';
+    panner5.distanceModel = 'inverse';
+    panner5.refDistance = 1;
+    panner5.maxDistance = 10000;
+    panner5.rolloffFactor = 0.1;
+    panner5.coneInnerAngle = 360;
+    panner5.coneOuterAngle = 0;
+    panner5.coneOuterGain = 0;
+    panner5.setOrientation(1,0,0);
+    panner5.setPosition(0,0,0)
+    
+    var panner6 = context.createPanner();
+    panner6.panningModel = 'HRTF';
+    panner6.distanceModel = 'inverse';
+    panner6.refDistance = 1;
+    panner6.maxDistance = 10000;
+    panner6.rolloffFactor = 0.1;
+    panner6.coneInnerAngle = 360;
+    panner6.coneOuterAngle = 0;
+    panner6.coneOuterGain = 0;
+    panner6.setOrientation(1,0,0);
+    panner6.setPosition(0,0,0)
+    
+    var panner7 = context.createPanner();
+    panner7.panningModel = 'HRTF';
+    panner7.distanceModel = 'inverse';
+    panner7.refDistance = 1;
+    panner7.maxDistance = 10000;
+    panner7.rolloffFactor = 0.1;
+    panner7.coneInnerAngle = 360;
+    panner7.coneOuterAngle = 0;
+    panner7.coneOuterGain = 0;
+    panner7.setOrientation(1,0,0);
+    panner7.setPosition(0,0,0)
+    
+    
+//    function panner_init(mypanner){
+//    mypanner.panningModel = 'HRTF';
+//    mypanner.distanceModel = 'inverse';
+//    mypanner.refDistance = 1;
+//    mypanner.maxDistance = 10000;
+//    mypanner.rolloffFactor = 0.1;
+//    mypanner.coneInnerAngle = 360;
+//    mypanner.coneOuterAngle = 0;
+//    mypanner.coneOuterGain = 0;
+//    mypanner.setOrientation(1,0,0);
+//    mypanner.setPosition(0,0,0)
+//    
+//    }
+
+    
+    bufferLoader = new BufferLoader(context,
+             ['videos/banana.mp3',
+              'videos/family.mp3',
+              'videos/sponge.mp3',
+              'videos/lion.mp3',],
+            finishedLoading);
+        
+    bufferLoader.load()
+//    ;}
+        
+    function finishedLoading(bufferList) {
+        // Create two sources and play them both together.
+
+
+
+
+
+//        source0 = context.createBufferSource();
+//        source1 = context.createBufferSource();
+//        source2 = context.createBufferSource();
+//        source3 = context.createBufferSource();
+//        source4 = context.createBufferSource();
+//        source5 = context.createBufferSource();
+//        source6 = context.createBufferSource();
+//        source7 = context.createBufferSource();
+//        source8 = context.createBufferSource();
+
+//        source0.buffer = bufferList[0];
+//        source1.buffer = bufferList[1];
+//        source2.buffer = bufferList[2];
+//        source3.buffer = bufferList[3];
+//        source4.buffer = bufferList[0];
+//        source5.buffer = bufferList[1];
+//        source6.buffer = bufferList[2];
+//        source7.buffer = bufferList[3];
+//        source8.buffer = bufferList[1];
+
+        
+//        source0.connect(context.destination);
+//        source1.connect(context.destination);
+//        source2.connect(context.destination);
+//        source3.connect(context.destination);
+//        source4.connect(context.destination);
+//        source5.connect(context.destination);
+//        source6.connect(context.destination);
+//        source7.connect(context.destination);
+//        source8.connect(context.destination);
+
+//        source0.volume = context.createGain();
+//        source1.volume = context.createGain();
+//        source2.volume = context.createGain();
+//        source3.volume = context.createGain();
+//        source4.volume = context.createGain();
+//        source5.volume = context.createGain();
+//        source6.volume = context.createGain();
+//        source7.volume = context.createGain();
+//        source8.volume = context.createGain();
+
+
+
+        source0 = context.createBufferSource();source0.buffer = bufferList[0];source0.loop=true;
+        gain0 = context.createGain();
+        source0.connect(gain0);
+        gain0.connect(panner0);
+        panner0.connect(mainVolume);
+        
+        source1 = context.createBufferSource();source1.buffer = bufferList[1];source1.loop=true;
+        gain1 = context.createGain();
+        source1.connect(gain1);
+        gain1.connect(panner1);
+        panner1.connect(mainVolume);
+        
+        source2 = context.createBufferSource();source2.buffer = bufferList[2];source2.loop=true;
+        gain2 = context.createGain();
+        source2.connect(gain2);
+        gain2.connect(panner2);
+        panner2.connect(mainVolume);
+        
+        source3 = context.createBufferSource();source3.buffer = bufferList[3];source3.loop=true;
+        gain3 = context.createGain();
+        source3.connect(gain3);
+        gain3.connect(panner3);
+        panner3.connect(mainVolume);
+        
+        source4 = context.createBufferSource();source4.buffer = bufferList[0];source4.loop=true;
+        gain4 = context.createGain();
+        source4.connect(gain4);
+        gain4.connect(panner4);
+        panner4.connect(mainVolume);
+        
+        source5 = context.createBufferSource();source5.buffer = bufferList[1];source5.loop=true;
+        gain5 = context.createGain();
+        source5.connect(gain5);
+        gain5.connect(panner5);
+        panner5.connect(mainVolume);
+        
+        source6 = context.createBufferSource();source6.buffer = bufferList[2];source6.loop=true;
+        gain6 = context.createGain();
+        source6.connect(gain6);
+        gain6.connect(panner6);
+        panner6.connect(mainVolume);
+        
+        source7 = context.createBufferSource();source7.buffer = bufferList[3];source7.loop=true;
+        gain7 = context.createGain();
+        source7.connect(gain7);
+        gain7.connect(panner7);
+        panner7.connect(mainVolume);
+        
+    
+        //source0.panner = context.createPanner();
+//        source0.panner = panner;
+//        source0.volume.connect(source0.panner);
+//        source0.panner.connect(mainVolume);
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        source0.start(0);
+        source1.start(0);
+        source2.start(0);
+        source3.start(0);
+        source4.start(0);
+        source5.start(0);
+        source6.start(0);
+        source7.start(0);
+        
+
+       }
+        
+        
+
+
+
+
+
+///////////////////////////////////////////////////////////////
+///////////// Graphics part  ///////////////
+///////////////////////////////////////////////////////////////
             
 			var camera, scene, renderer;
 			var geometry, material, mesh;
 			var controls;
+            var p = new THREE.Vector3();;
 
 			var objects = [];
-                var updateFcts	= [];
+            var updateFcts	= [];
 			var raycaster;
             var clock = new THREE.Clock();
 			var blocker = document.getElementById( 'blocker' );
@@ -206,10 +486,18 @@
 
 			}
 
-			init();
-			animate();
+//			init();
+//			animate();
 
-			function init() {
+//			function init() {
+//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////    START OF init     ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
                 
@@ -217,33 +505,32 @@
 				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
                 
                 
-                ///////
-                var videoTexture2= new THREEx.VideoTexture('videos/banana.mp4');
-               var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
-               var videoTexture1= new THREEx.VideoTexture('videos/lion.mp4');
-                
+///////////////////////////////////////////////////////////////
+/////////////////////// Graphics part  ////////////////////////
+///////////////////////////////////////////////////////////////
+
+
+
+                var videoTexture0= new THREEx.VideoTexture('videos/banana.mp4');
+                var videoTexture1= new THREEx.VideoTexture('videos/sintel.ogv');
+                var videoTexture2= new THREEx.VideoTexture('videos/lion.mp4');
                 var videoTexture3= new THREEx.VideoTexture('videos/family.mp4');
                 var videoTexture4= new THREEx.VideoTexture('videos/banana.mp4');
                 var videoTexture5= new THREEx.VideoTexture('videos/banana.mp4');
                 var videoTexture6= new THREEx.VideoTexture('videos/sponge.mp4');
                 var videoTexture7= new THREEx.VideoTexture('videos/lion.mp4');
-                var videoTexture8= new THREEx.VideoTexture('videos/lion.mp4');
-	           var video	= videoTexture.video
-                var video	= videoTexture1.video
                 
-                               var videoTexture= new THREEx.VideoTexture('videos/sintel.ogv')
-               videoTexture.video.volume = 0;
-                               videoTexture1.video.volume = 0;
-                //videoTexture2.video.volume = 0;
+                videoTexture0.video.volume = 0;
+                videoTexture1.video.volume = 0;
+                videoTexture2.video.volume = 0;
                 videoTexture3.video.volume = 0;
                 videoTexture4.video.volume = 0;
                 videoTexture5.video.volume = 0;
                 videoTexture6.video.volume = 0;
                 videoTexture7.video.volume = 0;
-                videoTexture8.video.volume = 0;
                 
-               updateFcts.push(function(delta, now){
-		videoTexture.update(delta, now)
+    updateFcts.push(function(delta, now){
+		videoTexture0.update(delta, now)
         videoTexture1.update(delta, now)
         videoTexture2.update(delta, now)
         videoTexture3.update(delta, now)
@@ -251,98 +538,90 @@
         videoTexture5.update(delta, now)
         videoTexture6.update(delta, now)
         videoTexture7.update(delta, now)
-        videoTexture8.update(delta, now)
 	})
-                var geometry	= new THREE.CubeGeometry(50,40,1);
-	var material	= new THREE.MeshBasicMaterial({
-		map	: videoTexture.texture
-	});
-	var mesh1	= new THREE.Mesh( geometry, material );
-                
-	scene.add( mesh1 );
-                mesh1.position.set(0,10,-35);
-                
+    
+
                 ///////////////////
                 
             //////Textures
                 /////////////
-     var mesh_0	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
+    var m_height = 48;
+    var m_width = 72;
+    var m_depth = 0.001;
+    var d = 200;
+    var base_height = m_height/2;
+                
+                
+    var mesh_0	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture0.texture	}));
+    var mesh_1	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
+    var mesh_2	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture2.texture	}));
+    var mesh_3	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture3.texture	}));
+    var mesh_4	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture4.texture	}));
+    var mesh_5	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture5.texture	}));
+    var mesh_6	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture6.texture	}));
+    var mesh_7	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture7.texture	}));
 
-    var mesh_1	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture2.texture	}));
-
-    var mesh_2	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture3.texture	}));
-
-    var mesh_3	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture4.texture	}));
-
-    var mesh_4	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture5.texture	}));
-
-    var mesh_5	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture6.texture	}));
-
-    var mesh_6	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture7.texture	}));
-
-    var mesh_7	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture8.texture	}));
-
-    //var mesh_8	= new THREE.Mesh( new THREE.CubeGeometry(50,40,1), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
-
-    
-
-    
-
-    var d = 100;
-
-    
-
-    
-
-    scene.add( mesh_0 );
-
-    mesh_0.position.set(d,40,0)
-
-    mesh_0.rotation.set(0,Math.PI/4, 0)
-
+scene.add( mesh_0 );
+mesh_0.position.set(d,base_height,0)
+mesh_0.rotation.set(0,Math.PI/2,0)
 scene.add( mesh_1 );
-
-    mesh_1.position.set(d/Math.sqrt(2),40,d/Math.sqrt(2))
-
-    mesh_1.rotation.set(0, 2 * Math.PI/4, 0)
-
+mesh_1.position.set(d/Math.sqrt(2),base_height,d/Math.sqrt(2))
+mesh_1.rotation.set(0,Math.PI/4,0)
 scene.add( mesh_2 );
-
-    mesh_2.position.set(0,40,d)
-
-    mesh_2.rotation.set(0,3 * Math.PI/4, 0)
-
+mesh_2.position.set(0,base_height,d)
+mesh_2.rotation.set(0,0,0)
 scene.add( mesh_3 );
-
-    mesh_3.position.set(-d/Math.sqrt(2),40,d/Math.sqrt(2))
-
-    mesh_3.rotation.set(0,4 * Math.PI/4, 0)
-
+mesh_3.position.set(-d/Math.sqrt(2),base_height,d/Math.sqrt(2))
+mesh_3.rotation.set(0,-Math.PI/4,0)
 scene.add( mesh_4 );
-
-    mesh_4.position.set(-d,40,0)
-
-    mesh_4.rotation.set(0,5 * Math.PI/4, 0)
-
+mesh_4.position.set(-d,base_height,0)
+mesh_4.rotation.set(0,Math.PI/2,0)
 scene.add( mesh_5 );
-
-    mesh_5.position.set(-d/Math.sqrt(2),40,-d/Math.sqrt(2))
-
-    mesh_5.rotation.set(0,6 * Math.PI/4, 0)
-
+mesh_5.position.set(-d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
+mesh_5.rotation.set(0,Math.PI/4,0)
 scene.add( mesh_6 );
-
-    mesh_6.position.set(0,40,-d)
-
-    mesh_6.rotation.set(0,7 * Math.PI/4, 0)
-
+mesh_6.position.set(0,base_height,-d)
+mesh_6.rotation.set(0,0,0)
 scene.add( mesh_7 );
+mesh_7.position.set(d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
+mesh_7.rotation.set(0,-Math.PI/4,0)
 
-    mesh_7.position.set(d/Math.sqrt(2),40,-d/Math.sqrt(2))
 
-    mesh_7.rotation.set(0,8 * Math.PI/4, 0)
 
-   
+///////////////////////////////////////////////////////////////////////////////////
+////////////////  Audio part /////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var listener = context.listener;
+listener.dopplerFactor = 1;
+listener.speedOfSound = 343.3;
+listener.setOrientation(0,0,-1,0,1,0);
+
+
+panner0.setPosition(mesh_0.position.x,mesh_0.position.y,mesh_0.position.z)
+panner1.setPosition(mesh_1.position.x,mesh_1.position.y,mesh_1.position.z)
+panner2.setPosition(mesh_2.position.x,mesh_2.position.y,mesh_2.position.z)
+panner3.setPosition(mesh_3.position.x,mesh_3.position.y,mesh_3.position.z)
+panner4.setPosition(mesh_4.position.x,mesh_4.position.y,mesh_4.position.z)
+panner5.setPosition(mesh_5.position.x,mesh_5.position.y,mesh_5.position.z)
+panner6.setPosition(mesh_6.position.x,mesh_6.position.y,mesh_6.position.z)
+panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
+
+//source0.start(0);
+//source1.start(0);
+//source2.start(0);
+//source3.start(0);
+//source4.start(0);
+//source5.start(0);
+//source6.start(0);
+//source7.start(0);
+//source8.start(0);
+
+
+
+
+
+
                 /////////
 				var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
 				light.position.set( 1, 1, 1 );
@@ -426,7 +705,16 @@ scene.add( mesh_7 );
 
 				window.addEventListener( 'resize', onWindowResize, false );
 
-			}
+//			}
+//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////    END OF init     ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+animate();
+
+
 
 			function onWindowResize() {
 
@@ -471,11 +759,14 @@ scene.add( mesh_7 );
 				if ( intersections.length > 0 ) {
 
 					controls.isOnObject( true );
-
+                    
 				}
 
 				controls.update();
-
+              p.setFromMatrixPosition( camera.matrixWorld );
+//                p = camera.matrixWorld.getPosition();
+                listener.setPosition(p.x,p.y,p.z);
+//                //listener.setOrientation()
 				renderer.render( scene, camera );
 
 			}
