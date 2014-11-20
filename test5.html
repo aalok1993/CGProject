@@ -455,7 +455,7 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
                 
 				scene = new THREE.Scene();
-				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+				//scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
                 
                 
 ///////////////////////////////////////////////////////////////
@@ -620,12 +620,12 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 
 				var materials = [
 
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/px.jpg' ), // right
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nx.jpg' ), // left
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/py.jpg' ), // top
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/ny.jpg' ), // bottom
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/pz.jpg' ), // back
-					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nz.jpg' )  // front
+					loadTexture( './skybox/px.jpg' ), // right
+					loadTexture( './skybox/nx.jpg' ), // left
+					loadTexture( './skybox/py.jpg' ), // top
+					loadTexture( './skybox/ny.jpg' ), // bottom
+					loadTexture( './skybox/pz.jpg' ), // back
+					loadTexture( './skybox/nz.jpg' )  // front
 
 				];
 
@@ -670,32 +670,38 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 
 			//	 objects
 
-				geometry = new THREE.BoxGeometry( 20, 20, 20 );
+//				geometry = new THREE.BoxGeometry( 20, 20, 20 );
+//
+//				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+//
+//					var face = geometry.faces[ i ];
+//					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//
+//				}
 
-				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+var geometry = new THREE.BoxGeometry( 20, 20, 20 );
 
-					var face = geometry.faces[ i ];
-					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+				for ( var i = 0; i < 20; i ++ ) {
 
-				}
+					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
 
-				for ( var i = 0; i < 50; i ++ ) {
+					object.position.x = Math.random() * 800 - 400;
+					object.position.y = Math.random() * 800 - 400;
+					object.position.z = Math.random() * 800 - 400;
 
-					material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+					object.rotation.x = Math.random() * 2 * Math.PI;
+					object.rotation.y = Math.random() * 2 * Math.PI;
+					object.rotation.z = Math.random() * 2 * Math.PI;
 
-					var mesh = new THREE.Mesh( geometry, material );
-					mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
-					mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
-					mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
-					scene.add( mesh );
+					object.scale.x = Math.random() + 0.5;
+					object.scale.y = Math.random() + 0.5;
+					object.scale.z = Math.random() + 0.5;
 
-					material.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					scene.add( object );
 
-					objects.push( mesh );
-
-				}
+		}
 
 				
 
