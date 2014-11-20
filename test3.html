@@ -114,10 +114,13 @@
 ///////////// Loading Audio tracks into buffer  ///////////////
 ///////////////////////////////////////////////////////////////
 
+var vec;
+var up;
+
 //window.onload = audio_init;
             var REF_DISTANCE = 5;
             var MAX_DISTANCE = 10000;
-            var ROLLOF_FACTOR = 0.2;
+            var ROLLOF_FACTOR = 0.4;
             var CONE_INNER_ANGLE = 360;
             var CONE_OUTER_GAIN = 0;
             var CONE_OUTER_ANGLE= 0.5;
@@ -127,6 +130,7 @@ var bufferLoader;
 var source0, source1, source2, source3, source4, source5, source6, source7;
 var panner0, panner1, panner2, panner3, panner4, panner5, panner6, panner7;
 var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
+
 //var listener;
 //function audio_init() {
     // Fix up prefixing
@@ -249,12 +253,14 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
 
     
     bufferLoader = new BufferLoader(context,
-             ['videos/banana.mp3',
-              'videos/family.mp3',
-              'videos/sponge.mp3',
-              'videos/lion.mp3',
-             'videos/sponge.mp3',
-             'videos/sintel.ogv'],
+             ['videos/creep.mp3',
+              'videos/cryin.mp3',
+              'videos/evolution.mp3',
+              'videos/levels.mp3',
+             'videos/scientist.mp3',
+             'videos/summer.ogv',
+              'videos/teardrop.mp3',
+             'videos/verve.mp3',],
             finishedLoading);
         
     bufferLoader.load()
@@ -272,43 +278,43 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
         gain0.connect(panner0);
         panner0.connect(mainVolume);
         
-        source1 = context.createBufferSource();source1.buffer = bufferList[5];source1.loop=true;
+        source1 = context.createBufferSource();source1.buffer = bufferList[1];source1.loop=true;
         gain1 = context.createGain();
         source1.connect(gain1);
         gain1.connect(panner1);
         panner1.connect(mainVolume);
         
-        source2 = context.createBufferSource();source2.buffer = bufferList[3];source2.loop=true;
+        source2 = context.createBufferSource();source2.buffer = bufferList[2];source2.loop=true;
         gain2 = context.createGain();
         source2.connect(gain2);
         gain2.connect(panner2);
         panner2.connect(mainVolume);
         
-        source3 = context.createBufferSource();source3.buffer = bufferList[1];source3.loop=true;
+        source3 = context.createBufferSource();source3.buffer = bufferList[3];source3.loop=true;
         gain3 = context.createGain();
         source3.connect(gain3);
         gain3.connect(panner3);
         panner3.connect(mainVolume);
         
-        source4 = context.createBufferSource();source4.buffer = bufferList[0];source4.loop=true;
+        source4 = context.createBufferSource();source4.buffer = bufferList[4];source4.loop=true;
         gain4 = context.createGain();
         source4.connect(gain4);
         gain4.connect(panner4);
         panner4.connect(mainVolume);
         
-        source5 = context.createBufferSource();source5.buffer = bufferList[0];source5.loop=true;
+        source5 = context.createBufferSource();source5.buffer = bufferList[5];source5.loop=true;
         gain5 = context.createGain();
         source5.connect(gain5);
         gain5.connect(panner5);
         panner5.connect(mainVolume);
         
-        source6 = context.createBufferSource();source6.buffer = bufferList[4];source6.loop=true;
+        source6 = context.createBufferSource();source6.buffer = bufferList[6];source6.loop=true;
         gain6 = context.createGain();
         source6.connect(gain6);
         gain6.connect(panner6);
         panner6.connect(mainVolume);
         
-        source7 = context.createBufferSource();source7.buffer = bufferList[3];source7.loop=true;
+        source7 = context.createBufferSource();source7.buffer = bufferList[7];source7.loop=true;
         gain7 = context.createGain();
         source7.connect(gain7);
         gain7.connect(panner7);
@@ -455,7 +461,7 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
                 
 				scene = new THREE.Scene();
-				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+				//scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
                 
                 
 ///////////////////////////////////////////////////////////////
@@ -464,14 +470,14 @@ var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
 
 
 
-                var videoTexture0= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture1= new THREEx.VideoTexture('videos/sintel.ogv');
-                var videoTexture2= new THREEx.VideoTexture('videos/lion.webm');
-                var videoTexture3= new THREEx.VideoTexture('videos/family.mp4');
-                var videoTexture4= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture5= new THREEx.VideoTexture('videos/banana.mp4');
-                var videoTexture6= new THREEx.VideoTexture('videos/sponge.mp4');
-                var videoTexture7= new THREEx.VideoTexture('videos/lion.webm');
+                var videoTexture0= new THREEx.VideoTexture('videos/creep.ogv');
+                var videoTexture1= new THREEx.VideoTexture('videos/cryin.ogv');
+                var videoTexture2= new THREEx.VideoTexture('videos/evolution.ogv');
+                var videoTexture3= new THREEx.VideoTexture('videos/levels.ogv');
+                var videoTexture4= new THREEx.VideoTexture('videos/scientist.ogv');
+                var videoTexture5= new THREEx.VideoTexture('videos/summer.ogv');
+                var videoTexture6= new THREEx.VideoTexture('videos/teardrop.ogv');
+                var videoTexture7= new THREEx.VideoTexture('videos/verve.ogv');
                 
                 videoTexture0.video.volume = 0;
                 videoTexture1.video.volume = 0;
@@ -560,6 +566,14 @@ panner5.setPosition(mesh_5.position.x,mesh_5.position.y,mesh_5.position.z)
 panner6.setPosition(mesh_6.position.x,mesh_6.position.y,mesh_6.position.z)
 panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 
+panner0.setOrientation(-mesh_0.position.x,0,-mesh_0.position.z)
+panner1.setOrientation(-mesh_1.position.x,0,-mesh_1.position.z)
+panner2.setOrientation(-mesh_2.position.x,0,-mesh_2.position.z)
+panner3.setOrientation(-mesh_3.position.x,0,-mesh_3.position.z)
+panner4.setOrientation(-mesh_4.position.x,0,-mesh_4.position.z)
+panner5.setOrientation(-mesh_5.position.x,0,-mesh_5.position.z)
+panner6.setOrientation(-mesh_6.position.x,0,-mesh_6.position.z)
+panner7.setOrientation(-mesh_7.position.x,0,-mesh_7.position.z)
 
 
 
@@ -573,6 +587,9 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 				var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
 				light.position.set( -1, - 0.5, -1 );
 				scene.add( light );
+
+                var amb_light = new THREE.AmbientLight( 0x404040 ); // soft white light
+                scene.add( amb_light );
 
 				controls = new THREE.PointerLockControls( camera );
 				scene.add( controls.getObject() );
@@ -605,38 +622,148 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
 				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
 				mesh = new THREE.Mesh( geometry, material );
-				scene.add( mesh );
+		//		scene.add( mesh );
+
+
+
+            texture_placeholder = document.createElement( 'canvas' );
+            texture_placeholder.width = 128;
+            texture_placeholder.height = 128;
+
+        var context = texture_placeholder.getContext( '2d' );
+        context.fillStyle = 'rgb( 200, 200, 200 )';
+        context.fillRect( 0, 0, texture_placeholder.width, texture_placeholder.height );
+
+        var materials = [
+                 
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/px.jpg' ), // right
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nx.jpg' ), // left
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/py.jpg' ), // top
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/ny.jpg' ), // bottom
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/pz.jpg' ), // back
+                 loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nz.jpg' )  // front
+                 
+                 ];
+                 
+                 var sz=1000;
+                 var seg = 7;
+                 
+                 mesh = new THREE.Mesh( new THREE.BoxGeometry( sz, sz, sz, seg, seg, seg ), new THREE.MeshFaceMaterial( materials ) );
+                 mesh.scale.x = -1;
+                 //            mesh.scale.z = -1;
+                 scene.add( mesh );
+                 
+                 function loadTexture( path ) {
+                     
+                     var texture = new THREE.Texture( texture_placeholder );
+                     var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
+                     
+                     var image = new Image();
+                     image.onload = function () {
+                         
+                         texture.image = this;
+                         texture.needsUpdate = true;
+                         
+                     };
+                     image.src = path;
+                     
+                     return material;
+                     
+                 }
+        
+//		var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+//
+//				for ( var i = 0; i < 100; i ++ ) {
+//
+//					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+//
+//					object.position.x = Math.random() * 800 - 400;
+//					object.position.y = Math.random() * 800 - 400;
+//					object.position.z = Math.random() * 800 - 400;
+//
+//					object.rotation.x = Math.random() * 2 * Math.PI;
+//					object.rotation.y = Math.random() * 2 * Math.PI;
+//					object.rotation.z = Math.random() * 2 * Math.PI;
+//
+//					object.scale.x = Math.random() + 0.5;
+//					object.scale.y = Math.random() + 0.5;
+//					object.scale.z = Math.random() + 0.5;
+//
+//					scene.add( object );
+//
+//				}
+
 
 			//	 objects
 
-				geometry = new THREE.BoxGeometry( 20, 20, 20 );
+//				geometry = new THREE.BoxGeometry( 20, 20, 20 );
+//
+//				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+//
+//					var face = geometry.faces[ i ];
+//					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//
+//				}
+//
+//				for ( var i = 0; i < 50; i ++ ) {
+//
+//					material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+//
+//					var mesh = new THREE.Mesh( geometry, material );
+//					mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
+//					mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
+//					mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+//					scene.add( mesh );
+//
+//					material.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+//
+//					objects.push( mesh );
+//
+//				}
 
-				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
 
-					var face = geometry.faces[ i ];
-					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////    Loading particles on Floor    ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+          /////////////////////////////////////////////////////////////////////////////////////
+//////////////    Loading particles on Floor    ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////				
+ 
+            var AMOUNTX = 50;
+            var AMOUNTY = 50;
+            var SEPARATION = 50;
+            var YSCALE = 1;
+            
+            var material = new THREE.SpriteMaterial({  color: 0x000000, fog: true } );
+        var geometry = new THREE.SphereGeometry( .5, 32, 32 );
+var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+            
+var sphere = new THREE.SphereGeometry( 0.5, 16, 8 );
+				for ( var ix = 0; ix < AMOUNTX; ix++ ) {
+
+					for ( var iy = 0; iy < AMOUNTY; iy++ ) {
+
+var sphere = new THREE.Mesh( geometry, material );
+        sphere.position.set(ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 ), -20,  iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 ) );
+scene.add( sphere );                 
+
+					}
 
 				}
+            
+        
+        
+        /////////////////////////////////////////////////////////////////////////////////////
+        //////////////      ///////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////
 
-				for ( var i = 0; i < 50; i ++ ) {
 
-					material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
 
-					var mesh = new THREE.Mesh( geometry, material );
-					mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
-					mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
-					mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
-					scene.add( mesh );
 
-					material.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-
-					objects.push( mesh );
-
-				}
-
-				
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setClearColor( 0xffffff );
@@ -656,17 +783,8 @@ panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
             /////////////////////////////////////////////////////////////////////////////////////
 //////////////    Loading Minion Object    ///////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-           
-//      var loader = new THREE.OBJLoader();
-//            
-//loader.load( './images/minion.obj', function ( object2 ) {
-//  scene.add( object2 );
-// 
-//} );
-//            
-//            
-//            
-            
+
+
             //////////////////
 
 //			}
@@ -699,6 +817,23 @@ animate();
 		renderer.render( scene, camera );
         
 	})
+    
+    updateFcts.push(function(){
+                   var delta = clock.getDelta();
+                   //  camControls.update(delta);
+                   renderer.render( scene, camera );
+                   
+                   })
+                   
+                   function getRandomColor() {
+                       var letters = '0123456789abcdef'.split('');
+                       var color = '#';
+                       for (var i = 0; i < 6; i++ ) {
+                           color += letters[Math.floor(Math.random() * 16)];
+                       }
+                       return color;
+                   }
+    
 	////////////////////////////////////
     var lastTimeMsec= null;
     
@@ -726,11 +861,54 @@ animate();
                     
 				}
 
+          //  mesh.material.colorsNeedUpdate = true;
+
+            //scene.fog = new THREE.Fog( getRandomColor(), 0, 750 );
+
 				controls.update();
               p.setFromMatrixPosition( camera.matrixWorld );
 //                p = camera.matrixWorld.getPosition();
-                listener.setPosition(p.x,p.y,p.z);
-//                //listener.setOrientation()
+
+            vec = new THREE.Vector3( 0, 0, -1 );
+            up = new THREE.Vector3(0,1,0);
+//            vec.applyQuaternion( camera.quaternion );
+            vec.applyMatrix4( camera.matrixWorld );
+            up.applyMatrix4( camera.matrixWorld );
+            vec.normalize;
+            up.normalize;
+            
+            listener.setPosition(p.x,p.y,p.z);
+            listener.setOrientation(vec.x, vec.y, vec.z, up.x, up.y, up.z);
+
+
+
+
+
+//        // The camera's world matrix is named "matrix".
+//            var m = camera.matrix;
+//
+//            var mx = m.elements[12], my = m.elements[13], mz = m.elements[14];
+//            m.elements[12] = m.elements[13] = m.elements[14] = 0;
+//
+//        // Multiply the orientation vector by the world matrix of the camera.
+//          var vec = new THREE.Vector3(0,0,1);
+//            vec.applyProjection(m);
+//            vec.normalize();
+//
+//        // Multiply the up vector by the world matrix.
+//          var up = new THREE.Vector3(0,-1,0);
+//            up.applyProjection(m);
+//            up.normalize();
+//
+//        // Set the orientation and the up-vector for the listener.
+//            //ctx.listener.setOrientation(vec.x, vec.y, vec.z, up.x, up.y, up.z);
+//            
+//            listener.setPosition(p.x,p.y,p.z);
+//            listener.setOrientation(vec.x, vec.y, vec.z, up.x, up.y, up.z);
+//
+//            m.elements[12] = mx;
+//            m.elements[13] = my;
+//            m.elements[14] = mz;
 				renderer.render( scene, camera );
 
 			}

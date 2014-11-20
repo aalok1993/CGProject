@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>World of Video Craft</title>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+				font-family: arial;
+			}
+
+			#blocker {
+
+				position: absolute;
+
+				width: 100%;
+				height: 100%;
+
+				background-color: rgba(0,0,0,0.5);
+
+			}
+
+			#instructions {
+
+				width: 100%;
+				height: 100%;
+
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
+
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+
+				color: #ffffff;
+				text-align: center;
+
+				cursor: pointer;
+
+			}
+            #wait {
+
+				width: 100%;
+				height: 100%;
+
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
+
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+
+				color: #ffffff;
+				text-align: center;
+
+				cursor: pointer;
+
+			}
+
+		</style>
+	</head>
+	<body>
+        
+        <script src='js/buffer_loader.js'></script>
+		<script src="js/three.min.js"></script>
+		<script src="js/PointerLockControls.js"></script>
+        <script src='js/threex.videotexture.js'></script>
+        <script src='js/OBJLoader.js'></script>
+
+		<div id="blocker">
+
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+                <br /><br /><br /><br /><br />
+                <span style="font-size:20px">Loading Video Takes Time</span>
+                <br />
+				Please wait 30 seconds before clicking Play.
+				<br />
+			</div>
+
+		</div>
+
+      
+		<script>
+            
+///////////////////////////////////////////////////////////////
+///////////// Loading Audio tracks into buffer  ///////////////
+///////////////////////////////////////////////////////////////
+
+//window.onload = audio_init;
+            var REF_DISTANCE = 5;
+            var MAX_DISTANCE = 10000;
+            var ROLLOF_FACTOR = 0.2;
+            var CONE_INNER_ANGLE = 360;
+            var CONE_OUTER_GAIN = 0;
+            var CONE_OUTER_ANGLE= 0.5;
+            
+var context;
+var bufferLoader;
+var source0, source1, source2, source3, source4, source5, source6, source7;
+var panner0, panner1, panner2, panner3, panner4, panner5, panner6, panner7;
+var gain0, gain1, gain2, gain3, gain4, gain5, gain6, gain7;
+//var listener;
+//function audio_init() {
+    // Fix up prefixing
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    context = new AudioContext();
+    
+    mainVolume = context.createGain();
+    mainVolume.connect(context.destination);
+
+    var panner0 = context.createPanner();
+    panner0.panningModel = 'HRTF';
+    panner0.distanceModel = 'inverse';
+    panner0.refDistance = REF_DISTANCE;
+    panner0.maxDistance = MAX_DISTANCE;
+    panner0.rolloffFactor = ROLLOF_FACTOR;
+    panner0.coneInnerAngle = CONE_INNER_ANGLE;
+    panner0.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner0.coneOuterGain = CONE_OUTER_GAIN;
+    panner0.setOrientation(1,0,0);
+    panner0.setPosition(0,0,0)
+    
+    var panner1 = context.createPanner();
+    panner1.panningModel = 'HRTF';
+    panner1.distanceModel = 'inverse';
+    panner1.refDistance = REF_DISTANCE;
+    panner1.maxDistance = MAX_DISTANCE;
+    panner1.rolloffFactor = ROLLOF_FACTOR;
+    panner1.coneInnerAngle = CONE_INNER_ANGLE;
+    panner1.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner1.coneOuterGain = CONE_OUTER_GAIN;
+    panner1.setOrientation(1,0,0);
+    panner1.setPosition(0,0,0)
+    
+    var panner2 = context.createPanner();
+    panner2.panningModel = 'HRTF';
+    panner2.distanceModel = 'inverse';
+    panner2.refDistance = REF_DISTANCE;
+    panner2.maxDistance = MAX_DISTANCE;
+    panner2.rolloffFactor = ROLLOF_FACTOR;
+    panner2.coneInnerAngle = CONE_INNER_ANGLE;
+    panner2.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner2.coneOuterGain = CONE_OUTER_GAIN;
+    panner2.setOrientation(1,0,0);
+    panner2.setPosition(0,0,0)
+    
+    var panner3 = context.createPanner();
+    panner3.panningModel = 'HRTF';
+    panner3.distanceModel = 'inverse';
+    panner3.refDistance = REF_DISTANCE;
+    panner3.maxDistance = MAX_DISTANCE;
+    panner3.rolloffFactor = ROLLOF_FACTOR;
+    panner3.coneInnerAngle = CONE_INNER_ANGLE;
+    panner3.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner3.coneOuterGain = CONE_OUTER_GAIN;
+    panner3.setOrientation(1,0,0);
+    panner3.setPosition(0,0,0)
+   
+    var panner4 = context.createPanner();
+    panner4.panningModel = 'HRTF';
+    panner4.distanceModel = 'inverse';
+    panner4.refDistance = REF_DISTANCE;
+    panner4.maxDistance = MAX_DISTANCE;
+    panner4.rolloffFactor = ROLLOF_FACTOR;
+    panner4.coneInnerAngle = CONE_INNER_ANGLE;
+    panner4.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner4.coneOuterGain = CONE_OUTER_GAIN;
+    panner4.setOrientation(1,0,0);
+    panner4.setPosition(0,0,0)
+    
+    var panner5 = context.createPanner();
+    panner5.panningModel = 'HRTF';
+    panner5.distanceModel = 'inverse';
+    panner5.refDistance = REF_DISTANCE;
+    panner5.maxDistance = MAX_DISTANCE;
+    panner5.rolloffFactor = ROLLOF_FACTOR;
+    panner5.coneInnerAngle = CONE_INNER_ANGLE;
+    panner5.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner5.coneOuterGain = CONE_OUTER_GAIN;
+    panner5.setOrientation(1,0,0);
+    panner5.setPosition(0,0,0)
+    
+    var panner6 = context.createPanner();
+    panner6.panningModel = 'HRTF';
+    panner6.distanceModel = 'inverse';
+    panner6.refDistance = REF_DISTANCE;
+    panner6.maxDistance = MAX_DISTANCE;
+    panner6.rolloffFactor = ROLLOF_FACTOR;
+    panner6.coneInnerAngle = CONE_INNER_ANGLE;
+    panner6.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner6.coneOuterGain = CONE_OUTER_GAIN;
+    panner6.setOrientation(1,0,0);
+    panner6.setPosition(0,0,0)
+    
+    var panner7 = context.createPanner();
+    panner7.panningModel = 'HRTF';
+    panner7.distanceModel = 'inverse';
+    panner7.refDistance = REF_DISTANCE;
+    panner7.maxDistance = MAX_DISTANCE;
+    panner7.rolloffFactor = ROLLOF_FACTOR;
+    panner7.coneInnerAngle = CONE_INNER_ANGLE;
+    panner7.coneOuterAngle = CONE_OUTER_ANGLE;
+    panner7.coneOuterGain = CONE_OUTER_GAIN;
+    panner7.setOrientation(1,0,0);
+    panner7.setPosition(0,0,0)
+    
+    
+//    function panner_init(mypanner){
+//    mypanner.panningModel = 'HRTF';
+//    mypanner.distanceModel = 'inverse';
+//    mypanner.refDistance = 1;
+//    mypanner.maxDistance = 10000;
+//    mypanner.rolloffFactor = 0.1;
+//    mypanner.coneInnerAngle = 360;
+//    mypanner.coneOuterAngle = 0;
+//    mypanner.coneOuterGain = 0;
+//    mypanner.setOrientation(1,0,0);
+//    mypanner.setPosition(0,0,0)
+//    
+//    }
+
+    
+    bufferLoader = new BufferLoader(context,
+             ['videos/banana.mp3',
+              'videos/family.mp3',
+              'videos/sponge.mp3',
+              'videos/lion.mp3',
+             'videos/sponge.mp3',
+             'videos/sintel.ogv'],
+            finishedLoading);
+        
+    bufferLoader.load()
+//    ;}
+        
+    function finishedLoading(bufferList) {
+        // Create two sources and play them both together.
+      // var videoTexture7= new THREEx.VideoTexture('videos/lion.webm');
+
+
+
+        source0 = context.createBufferSource();source0.buffer = bufferList[0];source0.loop=true;
+        gain0 = context.createGain();
+        source0.connect(gain0);
+        gain0.connect(panner0);
+        panner0.connect(mainVolume);
+        
+        source1 = context.createBufferSource();source1.buffer = bufferList[5];source1.loop=true;
+        gain1 = context.createGain();
+        source1.connect(gain1);
+        gain1.connect(panner1);
+        panner1.connect(mainVolume);
+        
+        source2 = context.createBufferSource();source2.buffer = bufferList[3];source2.loop=true;
+        gain2 = context.createGain();
+        source2.connect(gain2);
+        gain2.connect(panner2);
+        panner2.connect(mainVolume);
+        
+        source3 = context.createBufferSource();source3.buffer = bufferList[1];source3.loop=true;
+        gain3 = context.createGain();
+        source3.connect(gain3);
+        gain3.connect(panner3);
+        panner3.connect(mainVolume);
+        
+        source4 = context.createBufferSource();source4.buffer = bufferList[0];source4.loop=true;
+        gain4 = context.createGain();
+        source4.connect(gain4);
+        gain4.connect(panner4);
+        panner4.connect(mainVolume);
+        
+        source5 = context.createBufferSource();source5.buffer = bufferList[0];source5.loop=true;
+        gain5 = context.createGain();
+        source5.connect(gain5);
+        gain5.connect(panner5);
+        panner5.connect(mainVolume);
+        
+        source6 = context.createBufferSource();source6.buffer = bufferList[4];source6.loop=true;
+        gain6 = context.createGain();
+        source6.connect(gain6);
+        gain6.connect(panner6);
+        panner6.connect(mainVolume);
+        
+        source7 = context.createBufferSource();source7.buffer = bufferList[3];source7.loop=true;
+        gain7 = context.createGain();
+        source7.connect(gain7);
+        gain7.connect(panner7);
+        panner7.connect(mainVolume);
+        
+
+        
+        
+        
+        source0.start(0);
+        source1.start(0);
+        source2.start(0);
+        source3.start(0);
+        source4.start(0);
+        source5.start(0);
+        source6.start(0);
+        source7.start(0);
+        
+
+       }
+        
+        
+
+
+
+
+
+///////////////////////////////////////////////////////////////
+///////////// Graphics part  ///////////////
+///////////////////////////////////////////////////////////////
+            
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+			var controls;
+            var p = new THREE.Vector3();;
+
+			var objects = [];
+            var updateFcts	= [];
+			var raycaster;
+            var clock = new THREE.Clock();
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+
+			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
+
+			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+			if ( havePointerLock ) {
+
+				var element = document.body;
+
+				var pointerlockchange = function ( event ) {
+
+					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+
+						controls.enabled = true;
+
+						blocker.style.display = 'none';
+
+					} else {
+
+						controls.enabled = false;
+
+						blocker.style.display = '-webkit-box';
+						blocker.style.display = '-moz-box';
+						blocker.style.display = 'box';
+
+						instructions.style.display = '';
+
+					}
+
+				}
+
+				var pointerlockerror = function ( event ) {
+
+					instructions.style.display = '';
+
+				}
+
+				// Hook pointer lock state change events
+				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+				instructions.addEventListener( 'click', function ( event ) {
+
+					instructions.style.display = 'none';
+
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+					if ( /Firefox/i.test( navigator.userAgent ) ) {
+
+						var fullscreenchange = function ( event ) {
+
+							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+
+								document.removeEventListener( 'fullscreenchange', fullscreenchange );
+								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+
+								element.requestPointerLock();
+							}
+
+						}
+
+						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+
+						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+						element.requestFullscreen();
+
+					} else {
+
+						element.requestPointerLock();
+
+					}
+
+				}, false );
+
+			} else {
+
+				instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+
+			}
+
+//			init();
+//			animate();
+
+//			function init() {
+//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////    START OF init     ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+                
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+                
+                
+///////////////////////////////////////////////////////////////
+/////////////////////// Graphics part  ////////////////////////
+///////////////////////////////////////////////////////////////
+
+
+
+                var videoTexture0= new THREEx.VideoTexture('videos/banana.mp4');
+                var videoTexture1= new THREEx.VideoTexture('videos/sintel.ogv');
+                var videoTexture2= new THREEx.VideoTexture('videos/lion.webm');
+                var videoTexture3= new THREEx.VideoTexture('videos/family.mp4');
+                var videoTexture4= new THREEx.VideoTexture('videos/banana.mp4');
+                var videoTexture5= new THREEx.VideoTexture('videos/banana.mp4');
+                var videoTexture6= new THREEx.VideoTexture('videos/sponge.mp4');
+                var videoTexture7= new THREEx.VideoTexture('videos/lion.webm');
+                
+                videoTexture0.video.volume = 0;
+                videoTexture1.video.volume = 0;
+                videoTexture2.video.volume = 0;
+                videoTexture3.video.volume = 0;
+                videoTexture4.video.volume = 0;
+                videoTexture5.video.volume = 0;
+                videoTexture6.video.volume = 0;
+                videoTexture7.video.volume = 0;
+                
+    updateFcts.push(function(delta, now){
+		videoTexture0.update(delta, now)
+        videoTexture1.update(delta, now)
+        videoTexture2.update(delta, now)
+        videoTexture3.update(delta, now)
+        videoTexture4.update(delta, now)
+        videoTexture5.update(delta, now)
+        videoTexture6.update(delta, now)
+        videoTexture7.update(delta, now)
+	})
+    
+
+                ///////////////////
+                
+            //////Textures
+                /////////////
+    var m_height = 48;
+    var m_width = 72;
+    var m_depth = 0.001;
+    var d = 200;
+    var base_height = m_height/2;
+                
+                
+    var mesh_0	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture0.texture	}));
+    var mesh_1	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture1.texture	}));
+    var mesh_2	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture2.texture	}));
+    var mesh_3	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture3.texture	}));
+    var mesh_4	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture4.texture	}));
+    var mesh_5	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture5.texture	}));
+    var mesh_6	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture6.texture	}));
+    var mesh_7	= new THREE.Mesh( new THREE.CubeGeometry(m_width,m_height,m_depth), new THREE.MeshBasicMaterial({map	: videoTexture7.texture	}));
+
+scene.add( mesh_0 );
+mesh_0.position.set(d,base_height,0)
+mesh_0.rotation.set(0,Math.PI/2,0)
+scene.add( mesh_1 );
+mesh_1.position.set(d/Math.sqrt(2),base_height,d/Math.sqrt(2))
+mesh_1.rotation.set(0,Math.PI/4,0)
+scene.add( mesh_2 );
+mesh_2.position.set(0,base_height,d)
+mesh_2.rotation.set(0,0,0)
+scene.add( mesh_3 );
+mesh_3.position.set(-d/Math.sqrt(2),base_height,d/Math.sqrt(2))
+mesh_3.rotation.set(0,-Math.PI/4,0)
+scene.add( mesh_4 );
+mesh_4.position.set(-d,base_height,0)
+mesh_4.rotation.set(0,Math.PI/2,0)
+scene.add( mesh_5 );
+mesh_5.position.set(-d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
+mesh_5.rotation.set(0,Math.PI/4,0)
+scene.add( mesh_6 );
+mesh_6.position.set(0,base_height,-d)
+mesh_6.rotation.set(0,0,0)
+scene.add( mesh_7 );
+mesh_7.position.set(d/Math.sqrt(2),base_height,-d/Math.sqrt(2))
+mesh_7.rotation.set(0,-Math.PI/4,0)
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+////////////////  Audio part /////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var listener = context.listener;
+listener.dopplerFactor = 1;
+listener.speedOfSound = 343.3;
+listener.setOrientation(0,0,-1,0,1,0);
+
+
+panner0.setPosition(mesh_0.position.x,mesh_0.position.y,mesh_0.position.z)
+panner1.setPosition(mesh_1.position.x,mesh_1.position.y,mesh_1.position.z)
+panner2.setPosition(mesh_2.position.x,mesh_2.position.y,mesh_2.position.z)
+panner3.setPosition(mesh_3.position.x,mesh_3.position.y,mesh_3.position.z)
+panner4.setPosition(mesh_4.position.x,mesh_4.position.y,mesh_4.position.z)
+panner5.setPosition(mesh_5.position.x,mesh_5.position.y,mesh_5.position.z)
+panner6.setPosition(mesh_6.position.x,mesh_6.position.y,mesh_6.position.z)
+panner7.setPosition(mesh_7.position.x,mesh_7.position.y,mesh_7.position.z)
+
+
+
+
+
+
+                /////////
+				var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
+				light.position.set( 1, 1, 1 );
+				scene.add( light );
+
+				var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
+				light.position.set( -1, - 0.5, -1 );
+				scene.add( light );
+
+				controls = new THREE.PointerLockControls( camera );
+				scene.add( controls.getObject() );
+
+				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+
+				// floor
+
+				geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
+
+				for ( var i = 0, l = geometry.vertices.length; i < l; i ++ ) {
+
+					var vertex = geometry.vertices[ i ];
+					vertex.x += Math.random() * 20 - 10;
+					vertex.y += Math.random() * 2;
+					vertex.z += Math.random() * 20 - 10;
+
+				}
+
+				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+
+					var face = geometry.faces[ i ];
+					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+				}
+
+				material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
+
+				mesh = new THREE.Mesh( geometry, material );
+				//scene.add( mesh );
+            ////////
+            
+            
+            
+                       texture_placeholder = document.createElement( 'canvas' );
+				texture_placeholder.width = 128;
+				texture_placeholder.height = 128;
+
+				var context = texture_placeholder.getContext( '2d' );
+				context.fillStyle = 'rgb( 200, 200, 200 )';
+				context.fillRect( 0, 0, texture_placeholder.width, texture_placeholder.height );
+
+				var materials = [
+
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/px.jpg' ), // right
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nx.jpg' ), // left
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/py.jpg' ), // top
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/ny.jpg' ), // bottom
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/pz.jpg' ), // back
+					loadTexture( '../js/mrdoob-three.js-1769fbf/examples/textures/cube/skybox/nz.jpg' )  // front
+
+				];
+
+                var sz=1000;
+                var seg = 7;
+            
+				mesh = new THREE.Mesh( new THREE.BoxGeometry( sz, sz, sz, seg, seg, seg ), new THREE.MeshFaceMaterial( materials ) );
+				mesh.scale.x = -1;
+//            mesh.scale.z = -1;
+				scene.add( mesh );
+            
+            function loadTexture( path ) {
+
+				var texture = new THREE.Texture( texture_placeholder );
+				var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
+
+				var image = new Image();
+				image.onload = function () {
+
+					texture.image = this;
+					texture.needsUpdate = true;
+
+				};
+				image.src = path;
+
+				return material;
+
+			}
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            ///////
+
+			//	 objects
+
+				geometry = new THREE.BoxGeometry( 20, 20, 20 );
+
+				for ( var i = 0, l = geometry.faces.length; i < l; i ++ ) {
+
+					var face = geometry.faces[ i ];
+					face.vertexColors[ 0 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 1 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					face.vertexColors[ 2 ] = new THREE.Color().setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+				}
+
+				for ( var i = 0; i < 50; i ++ ) {
+
+					material = new THREE.MeshPhongMaterial( { specular: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } );
+
+					var mesh = new THREE.Mesh( geometry, material );
+					mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
+					mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
+					mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+					scene.add( mesh );
+
+					material.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+
+					objects.push( mesh );
+
+				}
+
+				
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setClearColor( 0xffffff );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				document.body.appendChild( renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+            
+            
+            
+            
+            ////////////////////
+            
+            /////////////////////////////////////////////////////////////////////////////////////
+//////////////    Loading Minion Object    ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+           
+//      var loader = new THREE.OBJLoader();
+//            
+//loader.load( './images/minion.obj', function ( object2 ) {
+//  scene.add( object2 );
+// 
+//} );
+//            
+//            
+//            
+            
+            //////////////////
+
+//			}
+//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////    END OF init     ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+animate();
+
+
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+            
+            //////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	updateFcts.push(function(){
+        var delta = clock.getDelta();
+       //  camControls.update(delta);
+		renderer.render( scene, camera );
+        
+	})
+	////////////////////////////////////
+    var lastTimeMsec= null;
+    
+			function animate() {
+
+				requestAnimationFrame( animate );
+                var d = new Date();
+                var nowMsec = d.getMilliseconds();
+                lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		updateFcts.forEach(function(updateFn){
+			updateFn(deltaMsec/1000, nowMsec/1000)
+			
+                });
+				raycaster.ray.origin.copy( controls.getObject().position );
+				raycaster.ray.origin.y -= 10;
+
+				var intersections = raycaster.intersectObjects( objects );
+
+				if ( intersections.length > 0 ) {
+
+					controls.isOnObject( true );
+                    
+				}
+
+				controls.update();
+              p.setFromMatrixPosition( camera.matrixWorld );
+//                p = camera.matrixWorld.getPosition();
+                listener.setPosition(p.x,p.y,p.z);
+//                //listener.setOrientation()
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>
